@@ -64,7 +64,7 @@ class Worker extends \Illuminate\Queue\Worker
             $job = parent::getNextJob($connection, $queue);
             if ($job) {
                 if ($rateLimit) {
-                    $this->rateLimiter->hit($queue, $rateLimit['every']);
+                    $this->rateLimiter->hit($queue, $rateLimit['every'] / 60);
                 }
                 $this->log('Running job ' . $job->getJobId() . ' on queue ' . $queue);
                 break;
@@ -79,7 +79,7 @@ class Worker extends \Illuminate\Queue\Worker
     private function log(string $message)
     {
         if ($this->logger) {
-            $this->logger->debug($message);
+            //$this->logger->debug($message);
         }
     }
 }
